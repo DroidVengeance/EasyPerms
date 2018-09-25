@@ -4,11 +4,12 @@
 #API# - if {easyPerms.%player%::*} contains "some.permission"
 #===#
 
+
 on script load:
+	if folder "plugins/EasyPerms" doesn't exists:
+		create folder "plugins/EasyPerms"
 	if file "plugins/EasyPerms/player-permissions.yml" doesn't exists:
 		download from "https://bit.ly/2NCkErJ" to "plugins/EasyPerms/player-permissions.yml"
-	if file "plugins/EasyPerms/group-permissions.yml" doesn't exists:
-		create "plugins/EasyPerms/group-permissions.yml"
 
 on join:
 	set {easyPerms.%player%::*} to skutil yaml list "permissions.player.%player%" from file "plugins/EasyPerms/player-permissions.yml"
@@ -21,11 +22,11 @@ command /easyperms [<text>] [<text>] [<text>] [<text>]:
 	aliases: /easyp, /ep, /eperms
 	description: An easy to use permissions script
 	trigger:
-		if {easyPerms.%player%::*} contains "easyperms.admin" or "easyperms.admin.*":
+		if {easyPerms.%player%::*} contains "easyperms.admin" or "easyperms.admin.*" or "*":
 			if arg 1 is not set:
 				send "&cPlease specify &f""player"" &cor &f""group""&c!"
 				stop
-			if {easyPerms.%player%::*} contains "easyperms.admin.player" or "easyperms.admin.*":
+			if {easyPerms.%player%::*} contains "easyperms.admin.player" or "easyperms.admin.*" or "*":
 				if arg 1 is "player":
 					if arg 2 is not set:
 						send "&cPlease specify &f""add"" &cor &f""remove""&c!"
@@ -59,43 +60,6 @@ command /easyperms [<text>] [<text>] [<text>] [<text>]:
 							send "&aPermissions for &f%arg-3%:"
 							send "%loop-value%"
 							stop
-				else:
-					send "&cYou don't have permission to use that!"
-			if {easyPerms.%player%::*} contains "easyperms.admin.group" or "easyperms.admin.*":
-				if arg 1 is "group":
-					if arg 2 is not set:
-						send "&cPlease specify &f""add"" &cor &f""remove""&c!"
-						stop
-					if arg 2 is "add":
-						if arg 3 is not set:
-							send "&cPlease specify a &f""groupname""&c!"
-							stop
-						if arg 3 is set:
-							if arg 4 is not set:
-								add "" to skutil yaml list "permissions.group.%arg-3%" from file "plugins/EasyPerms/group-permissions.yml"
-								send "&aGroup &f%arg-3% &awas added&a!"
-								stop
-							else:
-								add arg 4 to skutil yaml list "permissions.group.%arg-3%" from file "plugins/EasyPerms/group-permissions.yml"
-								send "&aPermission &f%arg-4% &awas added to &9%arg-3%&a!"
-								stop
-				if arg 1 is "group":
-					if arg 2 is not set:
-						send "&cPlease specify &f""add"" &cor &f""remove""&c!"
-						stop
-					if arg 2 is "remove":
-						if arg 3 is not set:
-							send "&cPlease specify &f""groupname""&c!"
-							stop
-						if arg 3 is set:
-							if arg 4 is not set:
-								delete skutil yaml list "permissions.group.%arg-3%" from file "plugins/EasyPerms/group-permissions.yml"
-								send "&aGroup &f%arg-3% &awas removed&a!"
-								stop
-							else:
-								remove arg 4 from skutil yaml list "permissions.group.%arg-3%" from file "plugins/EasyPerms/group-permissions.yml"
-								send "&aPermission &f%arg-4% &awas removed from &9%arg-3%&a!"
-								stop
 				else:
 					send "&cYou don't have permission to use that!"
 		else:
