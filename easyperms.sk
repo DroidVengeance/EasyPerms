@@ -1,10 +1,12 @@
-#Integrate EasyPerms into your scripts! For all permission checks, use (if {easyPerms.%player%::*} contains "some.permission")
-#Variable used for checking permissions = {easyPerms.%player%::*}
+#Integrate EasyPerms into your scripts! Use this variable for checking permissions = {easyPerms.%player%::*}
 
+#===#
+#API# - if {easyPerms.%player%::*} contains "some.permission"
+#===#
 
 on script load:
 	if file "plugins/EasyPerms/player-permissions.yml" doesn't exists:
-		create "plugins/EasyPerms/player-permissions.yml"
+		download from "https://bit.ly/2NCkErJ" to "plugins/EasyPerms/player-permissions.yml"
 	if file "plugins/EasyPerms/group-permissions.yml" doesn't exists:
 		create "plugins/EasyPerms/group-permissions.yml"
 
