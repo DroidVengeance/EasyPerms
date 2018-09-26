@@ -64,8 +64,3 @@ command /easyperms [<text>] [<text>] [<text>] [<text>]:
 					send "&cYou don't have permission to use that!"
 		else:
 			send "&cYou don't have permission to use that!"
-			
-command /epdebug:
-	trigger:
-		loop {easyPerms.%player%::*}:
-			send "%loop-value%"
